@@ -12,6 +12,8 @@ initial_content = {
 initial_content['prompt'] = json.dumps(initial_content)
 
 states = {
+    # collect (1)name, (2)age, (3)sex, (4)current weight, (5)height, (6)medications
+    # create report to store in database
     'Greeting': {
         'next': 'CollectAge',
         'description': "Greet the user and introduce the chatbot's purpose.",

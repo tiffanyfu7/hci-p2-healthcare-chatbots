@@ -12,7 +12,6 @@ model_name = "gpt-35-turbo"
 
 st.title("💬 Healthcare Chatbot")
 
-
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
