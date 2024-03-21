@@ -10,14 +10,13 @@ with st.sidebar:
 
 model_name = "gpt-35-turbo"
 
-st.title("💬 Healthcare Chatbot")
+st.title("💬 Chatbot Hi")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
-
 
 if prompt := st.chat_input():
     if not openai_api_key:

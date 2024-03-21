@@ -5,7 +5,7 @@ from openai import AzureOpenAI
 # Initial message content as a JSON object
 initial_content = {
     "isNextState": False,
-    "resp": "I amd a chatbot to provide personalized weight loss advice. Nice to meet you! 😊",
+    "resp": "Hello I'm CHAD your Personal Assistant to help make your stay as enjoyable as possible! 😊 ",
     "data": ""
 }
 
@@ -15,9 +15,14 @@ states = {
     # collect (1)name, (2)age, (3)sex, (4)current weight, (5)height, (6)medications
     # create report to store in database
     'Greeting': {
-        'next': 'CollectAge',
+        'next': 'CollectName',
         'description': "Greet the user and introduce the chatbot's purpose.",
         'collectedDataName': None  # No data collected in this state
+    },
+    'CollectName': {
+        'next': 'CollectAge',
+        'description': "Ask the user for their name.",
+        'collectedDataName': 'name'  # Collecting name
     },
     'CollectAge': {
         'next': 'CollectGender',
@@ -40,20 +45,26 @@ states = {
         'collectedDataName': 'height'  # Collecting height
     },
     'CollectActivityLevel': {
-        'next': 'CollectGoalWeight',
+        'next': 'CollectMedications',
         'description': "Ask the user about their activity level.",
         'collectedDataName': 'activityLevel'  # Collecting activity level
     },
-    'CollectGoalWeight': {
-        'next': 'ProvideAdvice',
-        'description': "Ask the user for their weight loss goal.",
-        'collectedDataName': 'goalWeight'  # Collecting goal weight
+    'CollectMedications': {
+        'next': 'CollectOther',
+        'description': "Ask the user what current medications they take.",
+        'collectedDataName': 'medicationHistory'  # Collecting medication history
     },
-    'ProvideAdvice': {
+    'CollectOther': {
+        'next': 'DisplayProfile',
+        'description': "Ask the user what other information they would like they caregiver to know.",
+        'collectedDataName': 'otherInformation'  # Collecting medication history
+    },
+    'DisplayProfile': {
         'next': 'Unhandled',
-        'description': "Provide personalized weight loss advice based on the user's inputs.",
+        'description': "Display collected information and list in bullet format.",
         'collectedDataName': None  # No data collected in this state
     },
+    # direct to netflix, state other functionalities
     'Unhandled': {
         'next': None,
         'description': "Handle any unrelated or unclear inputs by guiding the user back to the conversation or asking for clarification.",
@@ -94,7 +105,7 @@ def create_model_prompt(user_content):
 
     prompt = f"""
     Answer with a json object in a string without linebreaks, with a isNextState field as a boolean value, a resp field with text value, a data field as a string value (the value of the current collected data, if applicable, not all the collected data till now).
-    You are a chatbot designed to collect user data and provide weight loss suggestions. 
+    You are a chatbot designed to collect user data to help build patient records for caregivers and make a patients stay as enjoyable as possible. 
     The current state of your conversation with the user is {current_state}, which means {state_description}. 
     If the goal of the current state is satisfied, the next state is {next_state}, which means {next_state_description}.
     The new response from the user is: {user_content}.
@@ -141,7 +152,7 @@ with st.sidebar:
 
 model_name = "gpt-35-turbo"
 
-st.title("💬 Healthcare Chatbot")
+st.title("💬 CHAD")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": initial_content}]
@@ -178,4 +189,9 @@ if user_resp := st.chat_input():
     model_resp['prompt'] = json.dumps(model_resp)
 
     st.session_state.messages.append({"role": "assistant", "content": model_resp})
-    st.chat_message("assistant").write(model_resp['resp'])
+    st.chat_message("CHAD").write(model_resp['resp'])
+
+with open('./patient_chatbot.css') as f:
+    css = f.read()
+
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
