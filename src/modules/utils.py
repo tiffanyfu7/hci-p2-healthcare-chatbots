@@ -100,6 +100,3 @@ class Utilities:
         st.session_state["ready"] = True
 
         return chatbot
-
-
-    
