@@ -57,7 +57,7 @@ states = {
     'CollectMedications': {
         'next': 'DrugAllergies',
         'description': "Ask the user what current medications they take.",
-        'collectedDataName': 'medicationHistory'  # Collecting medication history
+        'collectedDataName': 'medications'  # Collecting medication history
     },
     'DrugAllergies': {
         'next': 'CollectOther',
