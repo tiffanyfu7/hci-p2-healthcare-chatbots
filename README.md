@@ -12,5 +12,11 @@ To run caregiver chatbot
 ```
 cd caregiver
 pip intall -r requirements.txt
-streamlit run caregiver_chatbot.py
+streamlit run src/Home.py
+```
+To run doctor chatbot
+```
+cd doctor
+pip intall -r requirements.txt
+streamlit run doctor_notes.py
 ```
