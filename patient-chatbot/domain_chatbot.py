@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 from openai import AzureOpenAI
-
+import time
 # Initial message content as a JSON object
 initial_content = {
     "isNextState": False,
@@ -36,23 +36,33 @@ states = {
     },
     'CollectCurrentWeight': {
         'next': 'CollectHeight',
-        'description': "Ask the user for their current weight.",
+        'description': "Ask the user for their current weight in kilograms.",
         'collectedDataName': 'currentWeight'  # Collecting current weight
     },
     'CollectHeight': {
         'next': 'CollectActivityLevel',
-        'description': "Ask the user for their height.",
+        'description': "Ask the user for their height in centimeters.",
         'collectedDataName': 'height'  # Collecting height
     },
     'CollectActivityLevel': {
-        'next': 'CollectMedications',
+        'next': 'PastMedicalHistory',
         'description': "Ask the user about their activity level.",
         'collectedDataName': 'activityLevel'  # Collecting activity level
     },
+    'PastMedicalHistory': {
+        'next': 'CollectMedications',
+        'description': "Ask the user what past medical history they have.",
+        'collectedDataName': 'pastMedicalHistory'  # Collecting medication history
+    },
     'CollectMedications': {
-        'next': 'CollectOther',
+        'next': 'DrugAllergies',
         'description': "Ask the user what current medications they take.",
         'collectedDataName': 'medicationHistory'  # Collecting medication history
+    },
+    'DrugAllergies': {
+        'next': 'CollectOther',
+        'description': "Ask the user if they have any drug allergies.",
+        'collectedDataName': 'medicalAllergies'  # Collecting medical allergies
     },
     'CollectOther': {
         'next': 'DisplayProfile',
@@ -60,11 +70,15 @@ states = {
         'collectedDataName': 'otherInformation'  # Collecting medication history
     },
     'DisplayProfile': {
-        'next': 'Unhandled',
-        'description': "Display collected information and list in bullet format.",
+        'next': 'OtherFunctionalities',
+        'description': "Display collected information and list them bullet style.",
         'collectedDataName': None  # No data collected in this state
     },
-    # direct to netflix, state other functionalities
+    'OtherFunctionalities': {
+        'next': 'Unhandled',
+        'description': "Tell the user to explore other functionalities including opening Netflix and calling for assistance.",
+        'collectedDataName': None  # No data collected in this state
+    },
     'Unhandled': {
         'next': None,
         'description': "Handle any unrelated or unclear inputs by guiding the user back to the conversation or asking for clarification.",
@@ -141,6 +155,10 @@ def get_response_from_model(client):
 
     return response_data
 
+with open('./patient_chatbot.css') as f:
+    css = f.read()
+
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
 if 'current_state' not in st.session_state:
     st.session_state['current_state'] = 'Greeting'
@@ -189,9 +207,4 @@ if user_resp := st.chat_input():
     model_resp['prompt'] = json.dumps(model_resp)
 
     st.session_state.messages.append({"role": "assistant", "content": model_resp})
-    st.chat_message("CHAD").write(model_resp['resp'])
-
-with open('./patient_chatbot.css') as f:
-    css = f.read()
-
-st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
+    st.chat_message("assistant").write(model_resp['resp'])

@@ -7,6 +7,4 @@ To run, following the following steps:
 - `streamlit run simple_chatbot.py` or `streamlit run domain_chatbot.py`
 
 Next Steps:
-- Follow Guidlines of Questions
 - Implement Speech to Text
-- Redirect to other features, entertainment/calling for assistance

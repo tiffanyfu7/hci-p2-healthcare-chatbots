@@ -1,11 +1,30 @@
 .stApp>header {
+    font-size: large;
     background-color: transparent;
 }
 
 .stApp {
     margin: auto;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 3em;
     overflow: auto;
     background-color:  #7dc4ff;
-    background-attachment: fixed;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+p {
+    font-size: 20px;
+}
+
+ul {
+    font-size: 20px;
+}
+
+.stTextInput { 
+    background-color: aliceblue;
 }
