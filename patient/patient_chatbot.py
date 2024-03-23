@@ -155,7 +155,7 @@ def get_response_from_model(client):
 
     return response_data
 
-with open('./patient_chatbot.css') as f:
+with open('./chatbot.css') as f:
     css = f.read()
 
 st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
