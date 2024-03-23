@@ -1,6 +1,6 @@
 # CHAD
 ## Chatbot for COMP4461 Project Two
-Authors: Tiffany Fu, Nicole Lucas, Sherrie Lam, Edith Leung
+Authors: Tiffany Fu, Nicole Lucas, Sherie Lam, Edith Leung
 
 To run patient chatbot
 ```
