@@ -2,6 +2,9 @@
 ## Chatbot for COMP4461 Project Two
 Authors: Tiffany Fu, Nicole Lucas, Sherie Lam, Edith Leung
 
+<a href="https://docs.google.com/presentation/d/1pw1Ttja2CEmkxsx-5gDffttAko7qnYzHE5KAZWmp6t4/edit?usp=sharing">Presentation Slide</a> <br>
+<a href="https://youtu.be/3zHUk017LXM">Video Demo</a>
+
 To run patient chatbot
 ```
 cd patient
